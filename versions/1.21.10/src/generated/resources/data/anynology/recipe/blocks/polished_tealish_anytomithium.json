@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "x": "anynology:tealish_anytomithium_block"
+  },
+  "pattern": [
+    "xx",
+    "xx"
+  ],
+  "result": {
+    "count": 4,
+    "id": "anynology:polished_tealish_anytomithium"
+  }
+}

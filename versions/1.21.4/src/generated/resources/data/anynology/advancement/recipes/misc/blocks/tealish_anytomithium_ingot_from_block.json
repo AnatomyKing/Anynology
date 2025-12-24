@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_tealish_anytomithium_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "anynology:tealish_anytomithium_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "anynology:blocks/tealish_anytomithium_ingot_from_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tealish_anytomithium_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "anynology:blocks/tealish_anytomithium_ingot_from_block"
+    ]
+  }
+}

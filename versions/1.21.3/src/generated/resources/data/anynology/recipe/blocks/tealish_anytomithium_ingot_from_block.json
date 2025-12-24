@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "anynology:tealish_anytomithium_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "anynology:tealish_anytomithium_ingot"
+  }
+}

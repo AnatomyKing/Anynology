@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "anynology:polished_purpish_anytomithium"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "anynology:blocks/polished_purpish_anytomithium"
+}

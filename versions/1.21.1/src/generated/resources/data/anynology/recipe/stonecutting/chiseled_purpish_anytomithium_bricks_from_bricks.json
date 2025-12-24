@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "anynology:purpish_anytomithium_bricks"
+  },
+  "result": {
+    "count": 1,
+    "id": "anynology:chiseled_purpish_anytomithium_bricks"
+  }
+}

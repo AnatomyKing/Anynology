@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 300,
+  "experience": 0.7,
+  "ingredient": "anynology:raw_anytomithium",
+  "result": {
+    "count": 1,
+    "id": "anynology:purpish_anytomithium_ingot"
+  }
+}

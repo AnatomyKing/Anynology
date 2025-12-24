@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "x": {
+      "item": "anynology:tealish_anytomithium_block"
+    }
+  },
+  "pattern": [
+    "x x",
+    " x ",
+    "x x"
+  ],
+  "result": {
+    "count": 4,
+    "id": "anynology:tealish_anytomithium_grate"
+  }
+}

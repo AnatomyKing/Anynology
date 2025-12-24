@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "x": "anynology:purpish_anytomithium_bricks"
+  },
+  "pattern": [
+    "x",
+    "x"
+  ],
+  "result": {
+    "count": 1,
+    "id": "anynology:chiseled_purpish_anytomithium_bricks"
+  }
+}

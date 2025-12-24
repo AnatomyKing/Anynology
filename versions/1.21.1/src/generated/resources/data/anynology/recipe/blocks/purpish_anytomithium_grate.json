@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "x": {
+      "item": "anynology:purpish_anytomithium_block"
+    }
+  },
+  "pattern": [
+    "x x",
+    " x ",
+    "x x"
+  ],
+  "result": {
+    "count": 4,
+    "id": "anynology:purpish_anytomithium_grate"
+  }
+}

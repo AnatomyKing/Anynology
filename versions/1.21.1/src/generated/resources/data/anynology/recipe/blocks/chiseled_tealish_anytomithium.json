@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "x": {
+      "item": "anynology:cut_tealish_anytomithium"
+    }
+  },
+  "pattern": [
+    "x",
+    "x"
+  ],
+  "result": {
+    "count": 1,
+    "id": "anynology:chiseled_tealish_anytomithium"
+  }
+}

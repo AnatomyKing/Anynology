@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "anynology:block/cut_purpish_anytomithium"
+  }
+}

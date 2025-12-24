@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_tealish_anytomithium_bricks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "anynology:tealish_anytomithium_bricks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "anynology:stonecutting/chiseled_tealish_anytomithium_bricks_from_bricks"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tealish_anytomithium_bricks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "anynology:stonecutting/chiseled_tealish_anytomithium_bricks_from_bricks"
+    ]
+  }
+}

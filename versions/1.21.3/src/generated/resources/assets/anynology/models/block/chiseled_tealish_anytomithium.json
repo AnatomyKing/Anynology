@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "anynology:block/chiseled_tealish_anytomithium_top",
+    "side": "anynology:block/chiseled_tealish_anytomithium"
+  }
+}

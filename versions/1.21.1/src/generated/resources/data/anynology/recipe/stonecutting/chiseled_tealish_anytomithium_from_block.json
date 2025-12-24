@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "anynology:tealish_anytomithium_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "anynology:chiseled_tealish_anytomithium"
+  }
+}
