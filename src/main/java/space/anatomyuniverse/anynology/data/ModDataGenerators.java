@@ -11,14 +11,14 @@ import java.util.List;
 import java.util.Set;
 
 //? if <1.21.4 {
-import net.minecraft.data.PackOutput;
+/*import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-//?}
+*///?}
 
 public final class ModDataGenerators {
 
     //? if <1.21.4 {
-    public static void gatherData(final GatherDataEvent event) {
+    /*public static void gatherData(final GatherDataEvent event) {
         final PackOutput output = event.getGenerator().getPackOutput();
         final ExistingFileHelper efh = event.getExistingFileHelper();
 
@@ -31,11 +31,11 @@ public final class ModDataGenerators {
         if (event.includeServer()) {
             // Recipes
             //? if <1.21.3 {
-            event.getGenerator().addProvider(true, new ModRecipeProvider(output, event.getLookupProvider()));
-            //?}
+            /^event.getGenerator().addProvider(true, new ModRecipeProvider(output, event.getLookupProvider()));
+            ^///?}
             //? if >=1.21.3 {
-            /*event.getGenerator().addProvider(true, new ModRecipeProvider.Runner(output, event.getLookupProvider()));
-            *///?}
+            event.getGenerator().addProvider(true, new ModRecipeProvider.Runner(output, event.getLookupProvider()));
+            //?}
 
             event.getGenerator().addProvider(true,
                     new ModBlockTagsProvider(output, event.getLookupProvider(), efh)
@@ -54,13 +54,13 @@ public final class ModDataGenerators {
             );
         }
     }
-    //?}
+    *///?}
 
     //? if >=1.21.4 {
-    /*/^*
+    /**
      * 1.21.4+: register providers via GatherDataEvent.Client#createProvider(...).
      * (NeoForge docs recommend registering *all* providers here, and using runClientData.)
-     ^/
+     */
     public static void gatherData(final GatherDataEvent.Client event) {
         // Client-side generators
         event.createProvider(output -> new ModLanguageProvider(output, "en_us"));
@@ -79,7 +79,7 @@ public final class ModDataGenerators {
                 lookup
         ));
     }
-    *///?}
+    //?}
 
     private ModDataGenerators() {}
 }

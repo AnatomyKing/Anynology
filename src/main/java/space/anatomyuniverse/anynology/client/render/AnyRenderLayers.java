@@ -14,7 +14,7 @@ import java.util.*;
 // ============================================================================
 
 //? if <1.21.5 {
-import net.minecraft.client.renderer.RenderType;
+/*import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -25,14 +25,14 @@ import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.common.util.TriState;
 
 //? if <1.21.4 {
-import net.neoforged.neoforge.client.model.BakedModelWrapper;
-//?} else {
-/*import net.minecraft.client.resources.model.DelegateBakedModel;
+/^import net.neoforged.neoforge.client.model.BakedModelWrapper;
+^///?} else {
+import net.minecraft.client.resources.model.DelegateBakedModel;
 // If your 1.21.4 setup does NOT have net.minecraft...DelegateBakedModel,
 // change the line above to the package that exists in your mapped deps.
-*///?}
-//?} else {
-/*import net.minecraft.client.renderer.RenderType; // used for 1.21.5–1.21.7 render-type forcing
+//?}
+*///?} else {
+import net.minecraft.client.renderer.RenderType; // used for 1.21.5–1.21.7 render-type forcing
 import net.minecraft.client.renderer.block.model.BlockModelPart;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -44,16 +44,17 @@ import net.minecraft.world.level.BlockAndTintGetter;
 import net.neoforged.neoforge.client.model.DelegateBlockStateModel;
 
 //? if >=1.21.8 {
-/^import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
-^///?}
-*///?}
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+//?}
+//?}
 // ============================================================================
 
 public final class AnyRenderLayers {
 
     private static final Set<Block> CUTOUT_BLOCKS = Sets.newHashSet(
             ModBlocks.PURPISH_ANYTOMITHIUM_GRATE.get(),
-            ModBlocks.TEALISH_ANYTOMITHIUM_GRATE.get()
+            ModBlocks.TEALISH_ANYTOMITHIUM_GRATE.get(),
+            ModBlocks.BANNER_EATER.get()
     );
 
     private static final Set<Block> TRANSLUCENT_BLOCKS = Sets.newHashSet(
@@ -71,10 +72,10 @@ public final class AnyRenderLayers {
         if (CUTOUT_BLOCKS.isEmpty() && TRANSLUCENT_BLOCKS.isEmpty() && NO_AO_BLOCKS.isEmpty()) return;
 
         //? if <1.21.5 {
-        onModifyBakingResultOldPipeline(event);
-         //?} else {
-        /*onModifyBakingResultNewPipeline(event);
-        *///?}
+        /*onModifyBakingResultOldPipeline(event);
+         *///?} else {
+        onModifyBakingResultNewPipeline(event);
+        //?}
     }
 
     // =========================================================================
@@ -82,7 +83,7 @@ public final class AnyRenderLayers {
     // =========================================================================
     //? if <1.21.5 {
 
-    private static void onModifyBakingResultOldPipeline(ModelEvent.ModifyBakingResult event) {
+    /*private static void onModifyBakingResultOldPipeline(ModelEvent.ModifyBakingResult event) {
         Map<Object, BakedModel> models = getAllBakedModelsCompat(event);
         if (models == null || models.isEmpty()) return;
 
@@ -107,13 +108,13 @@ public final class AnyRenderLayers {
         }
     }
 
-    /**
+    /^*
      * Works across small NeoForge API shifts:
      * - some versions expose ModifyBakingResult#getModels()
      * - others expose ModifyBakingResult#getBakingResult() then getModels()/models()
      * <p>
      * We only need a mutable Map we can replace values in.
-     */
+     ^/
     @SuppressWarnings("unchecked")
     private static Map<Object, BakedModel> getAllBakedModelsCompat(ModelEvent.ModifyBakingResult event) {
         try {
@@ -150,7 +151,7 @@ public final class AnyRenderLayers {
     }
 
     //? if <1.21.4 {
-    private static final class ForcePropsBakedModel extends BakedModelWrapper<BakedModel> {
+    /^private static final class ForcePropsBakedModel extends BakedModelWrapper<BakedModel> {
         private final RenderType forcedTypeOrNull;
         private final TriState forcedAO;
 
@@ -173,8 +174,8 @@ public final class AnyRenderLayers {
         }
     }
 }
-    //?} else {
-    /*private static final class ForcePropsBakedModel extends DelegateBakedModel {
+    ^///?} else {
+    private static final class ForcePropsBakedModel extends DelegateBakedModel {
         private final RenderType forcedTypeOrNull;
         private final TriState forcedAO;
 
@@ -197,16 +198,16 @@ public final class AnyRenderLayers {
         }
     }
 }
-    *///?}
+    //?}
 
-    //?} <1.21.5
+    *///?} <1.21.5
 
     // =========================================================================
     // 1.21.5+ : BlockStateModel pipeline
     // =========================================================================
     //? if >=1.21.5 {
 
-    /*private static void onModifyBakingResultNewPipeline(ModelEvent.ModifyBakingResult event) {
+    private static void onModifyBakingResultNewPipeline(ModelEvent.ModifyBakingResult event) {
         Map<BlockState, BlockStateModel> models = event.getBakingResult().blockStateModels();
         if (models.isEmpty()) return;
 
@@ -216,20 +217,20 @@ public final class AnyRenderLayers {
             Block b = state.getBlock();
 
             //? if >=1.21.8 {
-            /^ChunkSectionLayer forcedLayer = null;
+            ChunkSectionLayer forcedLayer = null;
             if (CUTOUT_BLOCKS.contains(b)) {
                 forcedLayer = ChunkSectionLayer.CUTOUT;
             } else if (TRANSLUCENT_BLOCKS.contains(b)) {
                 forcedLayer = ChunkSectionLayer.TRANSLUCENT;
             }
-            ^///?} else {
-            RenderType forcedLayer = null;
+            //?} else {
+            /*RenderType forcedLayer = null;
             if (CUTOUT_BLOCKS.contains(b)) {
                 forcedLayer = RenderType.cutout();
             } else if (TRANSLUCENT_BLOCKS.contains(b)) {
                 forcedLayer = RenderType.translucent();
             }
-            //?}
+            *///?}
 
             TriState forcedAO = NO_AO_BLOCKS.contains(b) ? TriState.FALSE : TriState.DEFAULT;
 
@@ -292,20 +293,20 @@ public final class AnyRenderLayers {
         }
 
         //? if >=1.21.8 {
-        /^@Override
+        @Override
         public ChunkSectionLayer getRenderType(BlockState state) {
             if (forcedLayerOrNull instanceof ChunkSectionLayer layer) return layer;
             return base.getRenderType(state);
         }
-        ^///?} else {
-        @Override
+        //?} else {
+        /*@Override
         public RenderType getRenderType(BlockState state) {
             if (forcedLayerOrNull instanceof RenderType rt) return rt;
             return base.getRenderType(state);
         }
-        //?}
+        *///?}
     }
 }
 
-    *///?} >=1.21.5
+    //?} >=1.21.5
 //}

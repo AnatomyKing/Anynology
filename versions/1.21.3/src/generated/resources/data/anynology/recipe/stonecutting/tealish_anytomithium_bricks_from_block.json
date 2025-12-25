@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "anynology:tealish_anytomithium_block",
-  "result": {
-    "count": 1,
-    "id": "anynology:tealish_anytomithium_bricks"
-  }
-}

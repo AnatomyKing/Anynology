@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "anynology:item/purpish_anytomithium_ingot"
-  }
-}

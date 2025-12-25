@@ -14,19 +14,10 @@ import space.anatomyuniverse.anynology.AnyCore;
 
 import java.util.Set;
 
-/**
- * Blocks + auto BlockItems.
- *
- * - Registers all blocks.
- * - Auto-registers BlockItems for all blocks (unless skipped).
- */
 public final class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(AnyCore.MOD_ID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(AnyCore.MOD_ID);
 
-    /* -------------------- Blocks -------------------- */
-
-    // Copper-block-like feel (strength 3 / 6, copper sound, requires tool)
     public static final DeferredBlock<Block> PURPISH_ANYTOMITHIUM_BLOCK =
             BLOCKS.registerBlock("purpish_anytomithium_block",
                     props -> new Block(props
@@ -135,15 +126,7 @@ public final class ModBlocks {
                             .requiresCorrectToolForDrops()
                             .pushReaction(PushReaction.NORMAL)));
 
-    /**
-     * “Grate” blocks:
-     * Make them GLASS-LIKE (transparent / light passing / non-occluding / non-suffocating / non-view-blocking),
-     * but with COPPER FEEL (sound + strength + correct tool).
-     *
-     * These property goals match copper grate behavior (transparent, no suffocation, no redstone conduction, no mob spawning). :contentReference[oaicite:2]{index=2}
-     *
-     * IMPORTANT: render layer (cutout) is client-side — keep adding these blocks to your existing render-layer setup.
-     */
+
     public static final DeferredBlock<Block> PURPISH_ANYTOMITHIUM_GRATE =
             BLOCKS.registerBlock("purpish_anytomithium_grate",
                     props -> new Block(props
@@ -152,12 +135,11 @@ public final class ModBlocks {
                             .sound(SoundType.COPPER)
                             .requiresCorrectToolForDrops()
 
-                            // glass-like transparency behavior:
                             .noOcclusion()
                             .isSuffocating((state, level, pos) -> false)
                             .isViewBlocking((state, level, pos) -> false)
 
-                            // grate-like rules:
+
                             .isRedstoneConductor((state, level, pos) -> false)
                             .isValidSpawn((state, level, pos, entityType) -> false)
 
@@ -171,18 +153,36 @@ public final class ModBlocks {
                             .sound(SoundType.COPPER)
                             .requiresCorrectToolForDrops()
 
-                            // glass-like transparency behavior:
+
                             .noOcclusion()
                             .isSuffocating((state, level, pos) -> false)
                             .isViewBlocking((state, level, pos) -> false)
 
-                            // grate-like rules:
+
                             .isRedstoneConductor((state, level, pos) -> false)
                             .isValidSpawn((state, level, pos, entityType) -> false)
 
                             .pushReaction(PushReaction.NORMAL)));
 
-    /* -------------------- Auto BlockItems -------------------- */
+    public static final DeferredBlock<Block> BANNER_EATER =
+            BLOCKS.registerBlock("banner_eater",
+                    props -> new Block(props
+                            .mapColor(MapColor.COLOR_ORANGE)
+                            .strength(3.0F, 6.0F)
+                            .sound(SoundType.COPPER)
+                            .requiresCorrectToolForDrops()
+
+
+                            .noOcclusion()
+                            .isSuffocating((state, level, pos) -> false)
+                            .isViewBlocking((state, level, pos) -> false)
+
+
+                            .isRedstoneConductor((state, level, pos) -> false)
+                            .isValidSpawn((state, level, pos, entityType) -> false)
+
+                            .pushReaction(PushReaction.NORMAL)));
+
 
     private static final Set<DeferredBlock<? extends Block>> SKIP_BLOCK_ITEMS = Set.of(
             // Add blocks here if you ever want NO BlockItem for them.

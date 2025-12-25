@@ -2,14 +2,14 @@
 package space.anatomyuniverse.anynology.data.providers;
 
 import net.minecraft.data.PackOutput;
-import space.anatomyuniverse.anynology.AnyCore;
-import space.anatomyuniverse.anynology.data.ModelSets;
-import space.anatomyuniverse.anynology.data.providers.utils.ItemsGen;
 
 
 //? if <1.21.4 {
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+/*import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import space.anatomyuniverse.anynology.AnyCore;
+import space.anatomyuniverse.anynology.data.utils.ItemsGen;
+import space.anatomyuniverse.anynology.data.utils.ModelSets;
 
 public final class ModItemModelProvider extends ItemModelProvider {
 
@@ -22,14 +22,14 @@ public final class ModItemModelProvider extends ItemModelProvider {
         ItemsGen.flatItems(this, ModelSets.flatItems());
     }
 }
-//?} else {
-/*/^*
+*///?} else {
+/**
  * 1.21.4+: item models are handled from the ModelProvider (ModBlockModelProvider),
  * and BlockItems get auto-generated if you don't specify custom client items. :contentReference[oaicite:3]{index=3}
  *
  * Keep this file so older versions still compile without deleting/renaming stuff.
- ^/
+ */
 public final class ModItemModelProvider {
     private ModItemModelProvider(PackOutput output) {}
 }
-*///?}
+//?}

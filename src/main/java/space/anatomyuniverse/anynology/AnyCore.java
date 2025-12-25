@@ -2,7 +2,6 @@
 package space.anatomyuniverse.anynology;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -30,7 +29,7 @@ public final class AnyCore {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public static final String VERSION = /*$ mod_version*/ "0.0.0";
-    public static final String MINECRAFT = /*$ minecraft*/ "1.21.1";
+    public static final String MINECRAFT = /*$ minecraft*/ "1.21.8";
 
     public AnyCore(IEventBus modBus, ModContainer container) {
         // Registries
