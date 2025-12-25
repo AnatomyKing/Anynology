@@ -44,6 +44,7 @@ public final class ModBlockModelProvider extends ModelProvider {
         BlocksGen.cubeAll(blocks, ModelSets.cubeAllBlocks());
         BlocksGen.cubeColumnTopSuffix(blocks, ModelSets.columnTopSuffixBlocks());
         BlocksGen.cubeCrafterLike(blocks, ModelSets.crafterLikeBlocks());
+        BlocksGen.cubeOwnModel(blocks, ModelSets.ownModelBlocks());
 
 
         // Non-block items only.

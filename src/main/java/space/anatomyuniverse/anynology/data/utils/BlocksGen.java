@@ -18,6 +18,9 @@ import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.core.Direction;
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplate;
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
+import space.anatomyuniverse.anynology.AnyCore;
+
+
 //?}
 
 public final class BlocksGen {
@@ -77,6 +80,9 @@ public final class BlocksGen {
     }
 
     *///?} else {
+
+    /** Simple one-variant blockstate: { "variants": { "": { "model": "<block model id>" } } } */
+
 
     /** Standard cube_all. (Block item models auto-generate if you don't define custom client items.) */
     public static void cubeAll(BlockModelGenerators gen, Block... blocks) {
@@ -147,6 +153,24 @@ public final class BlocksGen {
             );
 
             gen.createTrivialBlock(b, provider);
+        }
+    }
+
+    public static void cubeOwnModel(BlockModelGenerators gen, Block... blocks) {
+        for (Block b : blocks) {
+            // Builds: anynology:block/<path>
+            ResourceLocation model = ResourceLocation.fromNamespaceAndPath(
+                    AnyCore.MOD_ID,
+                    "block/" + ModelUtil.pathOf(b)
+            );
+
+            // blockstate -> model
+            gen.blockStateOutput.accept(
+                    BlockModelGenerators.createSimpleBlock(b, ModelUtil.mv(model))
+            );
+
+            // item model -> same model
+            gen.registerSimpleItemModel(b, model);
         }
     }
 

@@ -53,6 +53,13 @@ public final class ModelSets {
      */
     public static Block[] crafterLikeBlocks() {
         return new Block[] {
+//                ModBlocks.BANNER_EATER.get(),
+        };
+    }
+
+
+    public static Block[] ownModelBlocks() {
+        return new Block[] {
                 ModBlocks.BANNER_EATER.get(),
         };
     }
