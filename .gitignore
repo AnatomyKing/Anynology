@@ -29,15 +29,16 @@ run-data/
 logs/
 
 # Forge MDK
-
 forge*changelog.txt
-/src/generated/resources/.cache/
-/versions/1.21.1/src/generated/resources/.cache/
-/versions/1.21.3/src/generated/resources/.cache/
-/versions/1.21.4/src/generated/resources/.cache/
-/versions/1.21.5/src/generated/resources/.cache/
-/versions/1.21.8/src/generated/resources/.cache/
-/versions/1.21.10/src/generated/resources/.cache/
+
+# Generated resources cache (root)
+src/generated/resources/.cache/
+
+# Generated resources (all versions)
+versions/*/src/
+
+# Build folders (all versions)
+versions/*/build/
 # OS junk
 
 *.DS_Store
@@ -48,3 +49,4 @@ hs_err_*.log
 replay_*.log
 *.hprof
 *.jfr
+
