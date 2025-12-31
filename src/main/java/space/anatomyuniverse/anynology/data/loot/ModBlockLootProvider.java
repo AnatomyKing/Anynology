@@ -1,5 +1,5 @@
 // file: src/main/java/space/anatomyuniverse/anynology/data/providers/ModBlockLootProvider.java
-package space.anatomyuniverse.anynology.data.providers;
+package space.anatomyuniverse.anynology.data.loot;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;

@@ -1,5 +1,5 @@
 // file: src/main/java/space/anatomyuniverse/anynology/data/providers/ModBlockTagsProvider.java
-package space.anatomyuniverse.anynology.data.providers;
+package space.anatomyuniverse.anynology.data.tags;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;

@@ -1,0 +1,22 @@
+// file: src/main/java/space/anatomyuniverse/anynology/data/models/item/helpers/CustomItemModel.java
+package space.anatomyuniverse.anynology.data.models.item.helpers;
+
+import net.minecraft.world.level.ItemLike;
+
+//? if <1.21.4 {
+/*import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import space.anatomyuniverse.anynology.data.models.ModelUtil;
+*///?}
+
+public final class CustomItemModel {
+    private CustomItemModel() {}
+
+    //? if <1.21.4 {
+    /*/^* Item model that points at an existing model id (e.g. "anynology:item/foo_custom"). ^/
+    public static void generate(ItemModelProvider itemModels, ItemLike item, String modelId) {
+        ResourceLocation parent = ResourceLocation.parse(modelId);
+        itemModels.withExistingParent(ModelUtil.pathOf(item), parent);
+    }
+    *///?}
+}

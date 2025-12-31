@@ -1,11 +1,15 @@
+// file: src/main/java/space/anatomyuniverse/anynology/data/models/ModelSets.java
 // file: src/main/java/space/anatomyuniverse/anynology/data/utils/ModelSets.java
 // file: src/main/java/space/anatomyuniverse/anynology/data/providers/utils/ModelSets.java
-package space.anatomyuniverse.anynology.data.utils;
+package space.anatomyuniverse.anynology.data.models;
 
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import space.anatomyuniverse.anynology.AnyCore;
 import space.anatomyuniverse.anynology.block.ModBlocks;
 import space.anatomyuniverse.anynology.item.ModItems;
+
+import space.anatomyuniverse.anynology.data.models.block.helpers.BlockstateOwnModel;
 
 /**
  * Single source of truth for which things get which models.
@@ -38,7 +42,7 @@ public final class ModelSets {
     }
 
     /** cube_column blocks where end textures use "<id>_top" */
-    public static Block[] columnTopSuffixBlocks() {
+    public static Block[] CubePillarLikeBlocks() {
         return new Block[] {
                 ModBlocks.CHISELED_PURPISH_ANYTOMITHIUM.get(),
                 ModBlocks.CHISELED_TEALISH_ANYTOMITHIUM.get(),
@@ -51,16 +55,38 @@ public final class ModelSets {
      * Crafter-like cube blocks (6 textures: _bottom/_top/_north/_south/_west/_east).
      * Put your blocks here.
      */
-    public static Block[] crafterLikeBlocks() {
+    public static Block[] CubeCrafterLikeBlocks() {
         return new Block[] {
 //                ModBlocks.BANNER_EATER.get(),
         };
     }
 
-
-    public static Block[] ownModelBlocks() {
+    public static Block[] CubeOwnModelBlocks() {
         return new Block[] {
                 ModBlocks.BANNER_EATER.get(),
+        };
+    }
+
+
+    public static BlockstateOwnModel.Definition[] BlockstateOwnModel() {
+        return new BlockstateOwnModel.Definition[] {
+                // Minimal default example (single-variant):
+//                BlockstateOwnModel.of(ModBlocks.BANNER_EATER.get(), b -> b
+//                        .variant(
+//                                "", // selector for the "default" variant
+//                                AnyCore.MOD_ID + ":block/" + ModelUtil.pathOf(ModBlocks.BANNER_EATER.get())
+//                        )
+//                )
+
+
+                // Rotation example (copy your crafter-style logic):
+//                BlockstateOwnModel.of(ModBlocks.SOME_BLOCK.get(), b -> b
+//                        .variant("crafting=false,orientation=down_east,triggered=false", AnyCore.MOD_ID + ":block/some_model", 90, 90)
+//                        .variant("crafting=false,orientation=down_north,triggered=false", AnyCore.MOD_ID + ":block/some_model", 90, null)
+//                        .variant("crafting=false,orientation=east_up,triggered=false", AnyCore.MOD_ID + ":block/some_model", null, 90)
+//                        .variant("crafting=false,orientation=north_up,triggered=false", AnyCore.MOD_ID + ":block/some_model")
+//                )
+
         };
     }
 

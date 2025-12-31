@@ -1,5 +1,5 @@
 // file: src/main/java/space/anatomyuniverse/anynology/data/providers/utils/RecipeDSL.java
-package space.anatomyuniverse.anynology.data.utils;
+package space.anatomyuniverse.anynology.data.recipes;
 
 import net.minecraft.advancements.Criterion;
 

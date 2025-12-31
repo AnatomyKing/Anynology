@@ -1,8 +1,6 @@
 // file: src/main/java/space/anatomyuniverse/anynology/data/utils/ModelUtil.java
-package space.anatomyuniverse.anynology.data.utils;
+package space.anatomyuniverse.anynology.data.models;
 
-import net.minecraft.client.data.models.BlockModelGenerators;
-import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -42,9 +40,5 @@ public final class ModelUtil {
     public static ResourceLocation itemTex(ItemLike il) {
         ResourceLocation id = idOf(il);
         return ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "item/" + id.getPath());
-    }
-
-    public static MultiVariant mv(ResourceLocation model) {
-        return BlockModelGenerators.plainVariant(model);
     }
 }

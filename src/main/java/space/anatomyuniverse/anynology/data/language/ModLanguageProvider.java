@@ -1,4 +1,4 @@
-package space.anatomyuniverse.anynology.data.providers;
+package space.anatomyuniverse.anynology.data.language;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;

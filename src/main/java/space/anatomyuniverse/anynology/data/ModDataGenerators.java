@@ -5,7 +5,12 @@ package space.anatomyuniverse.anynology.data;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import space.anatomyuniverse.anynology.data.providers.*;
+import space.anatomyuniverse.anynology.data.language.ModLanguageProvider;
+import space.anatomyuniverse.anynology.data.loot.ModBlockLootProvider;
+import space.anatomyuniverse.anynology.data.models.block.ModBlockModelProvider;
+import space.anatomyuniverse.anynology.data.models.item.ModItemModelProvider;
+import space.anatomyuniverse.anynology.data.recipes.ModRecipeProvider;
+import space.anatomyuniverse.anynology.data.tags.ModBlockTagsProvider;
 
 import java.util.List;
 import java.util.Set;

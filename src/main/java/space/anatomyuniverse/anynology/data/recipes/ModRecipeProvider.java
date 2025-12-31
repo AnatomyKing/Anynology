@@ -1,4 +1,4 @@
-package space.anatomyuniverse.anynology.data.providers;
+package space.anatomyuniverse.anynology.data.recipes;
 
 import net.minecraft.advancements.Criterion;
 import net.minecraft.core.HolderLookup;
@@ -11,8 +11,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
+import org.jetbrains.annotations.NotNull;
 import space.anatomyuniverse.anynology.block.ModBlocks;
-import space.anatomyuniverse.anynology.data.utils.RecipeDSL;
 import space.anatomyuniverse.anynology.item.ModItems;
 
 import java.util.concurrent.CompletableFuture;
