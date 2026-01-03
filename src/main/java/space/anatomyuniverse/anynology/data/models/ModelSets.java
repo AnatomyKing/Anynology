@@ -1,6 +1,4 @@
 // file: src/main/java/space/anatomyuniverse/anynology/data/models/ModelSets.java
-// file: src/main/java/space/anatomyuniverse/anynology/data/utils/ModelSets.java
-// file: src/main/java/space/anatomyuniverse/anynology/data/providers/utils/ModelSets.java
 package space.anatomyuniverse.anynology.data.models;
 
 import net.minecraft.world.level.ItemLike;
@@ -11,10 +9,9 @@ import space.anatomyuniverse.anynology.item.ModItems;
 
 import space.anatomyuniverse.anynology.data.models.block.helpers.BlockstateOwnModel;
 
-/**
- * Single source of truth for which things get which models.
- * Keeps your lists in ONE place so you don't repeat them per version/provider.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public final class ModelSets {
     private ModelSets() {}
 
@@ -51,46 +48,52 @@ public final class ModelSets {
         };
     }
 
-    /**
-     * Crafter-like cube blocks (6 textures: _bottom/_top/_north/_south/_west/_east).
-     * Put your blocks here.
-     */
+    /** Crafter-like cube blocks (6 textures: _bottom/_top/_north/_south/_west/_east). */
     public static Block[] CubeCrafterLikeBlocks() {
         return new Block[] {
-//                ModBlocks.BANNER_EATER.get(),
+                // put crafter-like blocks here (NOT banner_eater; it's handled by BlockstateOwnModel)
         };
     }
 
+    /** Blocks that simply point at an existing block model (no custom blockstate variants needed). */
     public static Block[] CubeOwnModelBlocks() {
         return new Block[] {
-                ModBlocks.BANNER_EATER.get(),
+                // put simple “existing model” blocks here (NOT banner_eater if it needs facing-variants)
         };
     }
 
-
+    /** Your fully custom blockstate definitions (variants map). */
     public static BlockstateOwnModel.Definition[] BlockstateOwnModel() {
-        return new BlockstateOwnModel.Definition[] {
-                // Minimal default example (single-variant):
-//                BlockstateOwnModel.of(ModBlocks.BANNER_EATER.get(), b -> b
-//                        .variant(
-//                                "", // selector for the "default" variant
-//                                AnyCore.MOD_ID + ":block/" + ModelUtil.pathOf(ModBlocks.BANNER_EATER.get())
-//                        )
-//                )
+        return new BlockstateOwnModel.Definition[]{
 
+                BlockstateOwnModel.of(ModBlocks.BANNER_EATER.get(), b -> b
+                        .variant("facing=north,eater_state=closed", AnyCore.MOD_ID + ":block/banner_eater_closed")
+                        .variant("facing=east,eater_state=closed",  AnyCore.MOD_ID + ":block/banner_eater_closed", null, 90)
+                        .variant("facing=south,eater_state=closed", AnyCore.MOD_ID + ":block/banner_eater_closed", null, 180)
+                        .variant("facing=west,eater_state=closed",  AnyCore.MOD_ID + ":block/banner_eater_closed", null, 270)
 
-                // Rotation example (copy your crafter-style logic):
-//                BlockstateOwnModel.of(ModBlocks.SOME_BLOCK.get(), b -> b
-//                        .variant("crafting=false,orientation=down_east,triggered=false", AnyCore.MOD_ID + ":block/some_model", 90, 90)
-//                        .variant("crafting=false,orientation=down_north,triggered=false", AnyCore.MOD_ID + ":block/some_model", 90, null)
-//                        .variant("crafting=false,orientation=east_up,triggered=false", AnyCore.MOD_ID + ":block/some_model", null, 90)
-//                        .variant("crafting=false,orientation=north_up,triggered=false", AnyCore.MOD_ID + ":block/some_model")
-//                )
-
+                        .variant("facing=north,eater_state=open", AnyCore.MOD_ID + ":block/banner_eater_open")
+                        .variant("facing=east,eater_state=open",  AnyCore.MOD_ID + ":block/banner_eater_open", null, 90)
+                        .variant("facing=south,eater_state=open", AnyCore.MOD_ID + ":block/banner_eater_open", null, 180)
+                        .variant("facing=west,eater_state=open",  AnyCore.MOD_ID + ":block/banner_eater_open", null, 270)
+                )
         };
     }
 
-    /** Non-block items that need item/generated (or similar) models. */
+    /**
+     * Convenience: the blocks that will have their blockstates overwritten by BlockstateOwnModel.saveAll(...).
+     * Used to generate placeholder blockstates/items so ModelProvider validation passes (and old versions get item models).
+     */
+    public static Block[] BlockstateOwnModelBlocks() {
+        BlockstateOwnModel.Definition[] defs = BlockstateOwnModel();
+        List<Block> blocks = new ArrayList<>(defs.length);
+        for (BlockstateOwnModel.Definition d : defs) {
+            if (d != null && d.block != null) blocks.add(d.block);
+        }
+        return blocks.toArray(new Block[0]);
+    }
+
+    /** Non-block items that need item/generated models. */
     public static ItemLike[] flatItems() {
         return new ItemLike[] {
                 ModItems.RAW_ANYTOMITHIUM.get(),

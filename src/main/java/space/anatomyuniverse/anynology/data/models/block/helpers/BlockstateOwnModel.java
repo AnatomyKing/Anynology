@@ -1,6 +1,7 @@
 // file: src/main/java/space/anatomyuniverse/anynology/data/models/block/helpers/BlockstateOwnModel.java
 package space.anatomyuniverse.anynology.data.models.block.helpers;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
@@ -15,14 +16,18 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
+//? if <1.21.4 {
+/*import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+*///?} else {
+import net.minecraft.client.data.models.BlockModelGenerators;
+//?}
+
 /**
  * Writes fully custom blockstates JSON (variants map) with optional rotations (x/y) and uvlock.
  *
  * Output:
  *  assets/<modid>/blockstates/<block_path>.json
- *
- * Example variant JSON emitted:
- *  "age=0,attached=false": { "model":"modid:block/my_model", "x":90, "y":180, "uvlock":true }
  */
 public final class BlockstateOwnModel {
     private BlockstateOwnModel() {}
@@ -51,17 +56,14 @@ public final class BlockstateOwnModel {
             this.block = block;
         }
 
-        /** Minimal: selector -> model */
         public Builder variant(String selector, String model) {
             return variant(selector, model, null, null, null);
         }
 
-        /** With rotations (degrees, typically 0/90/180/270). */
         public Builder variant(String selector, String model, Integer x, Integer y) {
             return variant(selector, model, x, y, null);
         }
 
-        /** With rotations + uvlock. */
         public Builder variant(String selector, String model, Integer x, Integer y, Boolean uvlock) {
             JsonObject obj = new JsonObject();
             obj.addProperty("model", model);
@@ -80,10 +82,85 @@ public final class BlockstateOwnModel {
     }
 
     /**
-     * Save all custom blockstates.
+     * Normalize the RESOURCE_PACK output folder across versions:
+     * - Some versions return .../src/generated/resources
+     * - Other versions return .../src/generated/resources/assets
      *
-     * NOTE: this intentionally writes AFTER the normal model provider runs (we chain it in the provider),
-     * so you can "override" generated blockstates for the same block if needed.
+     * We want the folder that CONTAINS mod namespaces, i.e. .../assets
+     */
+    private static Path assetsRoot(PackOutput output) {
+        Path root = output.getOutputFolder(PackOutput.Target.RESOURCE_PACK);
+
+        Path name = root.getFileName();
+        if (name != null && "assets".equals(name.toString())) {
+            return root; // already points at .../assets
+        }
+        return root.resolve("assets"); // points at .../resources/assets
+    }
+
+    /**
+     * Picks a placeholder model for a Definition: FIRST variant's "model".
+     * (Your banner_eater first variant is banner_eater_closed, so it validates.)
+     */
+    public static ResourceLocation pickPlaceholderModel(Definition def) {
+        if (def == null || def.variants == null) {
+            return ResourceLocation.fromNamespaceAndPath("minecraft", "block/cube_all");
+        }
+
+        for (var entry : def.variants.entrySet()) {
+            JsonElement el = entry.getValue();
+            if (el == null || !el.isJsonObject()) continue;
+
+            JsonObject obj = el.getAsJsonObject();
+            if (!obj.has("model")) continue;
+
+            String modelId = obj.get("model").getAsString();
+            if (modelId == null || modelId.isBlank()) continue;
+
+            return ResourceLocation.parse(modelId);
+        }
+
+        return ResourceLocation.fromNamespaceAndPath("minecraft", "block/cube_all");
+    }
+
+    //? if <1.21.4 {
+    /*public static void generatePlaceholders(BlockStateProvider gen, Definition[] defs) {
+        if (defs == null || defs.length == 0) return;
+
+        for (Definition def : defs) {
+            if (def == null || def.block == null) continue;
+
+            ResourceLocation model = pickPlaceholderModel(def);
+            ModelFile existing = gen.models().getExistingFile(model);
+
+            gen.simpleBlock(def.block, existing);
+            gen.simpleBlockItem(def.block, existing);
+        }
+    }*/
+    //?} else {
+    public static void generatePlaceholders(BlockModelGenerators blocks, Definition[] defs) {
+        if (defs == null || defs.length == 0) return;
+
+        for (Definition def : defs) {
+            if (def == null || def.block == null) continue;
+
+            ResourceLocation model = pickPlaceholderModel(def);
+
+            //? if <1.21.5 {
+            /*blocks.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(def.block, model));
+            *///?} else {
+            blocks.blockStateOutput.accept(
+                    BlockModelGenerators.createSimpleBlock(def.block, BlockModelGenerators.plainVariant(model))
+            );
+            //?}
+
+            blocks.registerSimpleItemModel(def.block, model);
+        }
+    }
+    //?}
+
+    /**
+     * Save all custom blockstates (overwrites placeholders).
      */
     public static CompletableFuture<?> saveAll(
             PackOutput output,
@@ -95,7 +172,7 @@ public final class BlockstateOwnModel {
             return CompletableFuture.completedFuture(null);
         }
 
-        final Path root = output.getOutputFolder(PackOutput.Target.RESOURCE_PACK);
+        final Path assets = assetsRoot(output);
         final List<CompletableFuture<?>> futures = new ArrayList<>();
 
         for (Definition def : defs) {
@@ -104,7 +181,7 @@ public final class BlockstateOwnModel {
             ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(def.block);
 
             // assets/<modid>/blockstates/<path>.json
-            Path out = root
+            Path out = assets
                     .resolve(modId)
                     .resolve("blockstates")
                     .resolve(blockId.getPath() + ".json");

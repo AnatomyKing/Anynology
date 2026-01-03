@@ -11,6 +11,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import space.anatomyuniverse.anynology.AnyCore;
+import space.anatomyuniverse.anynology.block.custom.BannerEaterBlock;
 
 import java.util.Set;
 
@@ -166,21 +167,16 @@ public final class ModBlocks {
 
     public static final DeferredBlock<Block> BANNER_EATER =
             BLOCKS.registerBlock("banner_eater",
-                    props -> new Block(props
+                    props -> new BannerEaterBlock(props
                             .mapColor(MapColor.COLOR_ORANGE)
                             .strength(3.0F, 6.0F)
                             .sound(SoundType.COPPER)
                             .requiresCorrectToolForDrops()
-
-
                             .noOcclusion()
                             .isSuffocating((state, level, pos) -> false)
                             .isViewBlocking((state, level, pos) -> false)
-
-
                             .isRedstoneConductor((state, level, pos) -> false)
                             .isValidSpawn((state, level, pos, entityType) -> false)
-
                             .pushReaction(PushReaction.NORMAL)));
 
 
