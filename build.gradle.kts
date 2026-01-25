@@ -1,5 +1,6 @@
-// file: build.gradle.kts   (Stonecutter template evaluated per versions/<mc> node)
 import org.gradle.api.tasks.Sync
+import org.gradle.api.tasks.Delete
+import org.gradle.jvm.tasks.Jar
 
 plugins {
     id("net.neoforged.moddev")
@@ -19,7 +20,6 @@ val requiredJava = when {
     else -> JavaVersion.VERSION_1_8
 }
 
-
 val usesClientData = sc.current.parsed >= "1.21.4"
 
 val rootResourcesDir = rootProject.layout.projectDirectory.dir("src/main/resources")
@@ -35,7 +35,13 @@ val syncSharedResources = tasks.register<Sync>("syncSharedResources") {
     includeEmptyDirs = false
 }
 
-val sharedResourcesDir = sharedResourcesDirProvider.get().asFile
+val sharedResources = files(sharedResourcesDirProvider).builtBy(syncSharedResources)
+
+val cleanGeneratedResources = tasks.register<Delete>("cleanGeneratedResources") {
+    group = "moddev"
+    description = "Deletes versions/<mc>/src/generated/resources before datagen."
+    delete(generatedResourcesDir.asFile)
+}
 
 repositories {
     fun strictMaven(url: String, alias: String, vararg groups: String) = exclusiveContent {
@@ -88,7 +94,12 @@ neoForge {
             )
 
             existing(versionResourcesDir.asFile.absolutePath)
-            existing(sharedResourcesDir.absolutePath)
+
+            existing(sharedResources.asPath)
+
+            // if you reference other mods' models/textures in datagen:
+            // programArguments.addAll(listOf("--existing-mod", "minecraft"))
+            // programArguments.addAll(listOf("--existing-mod", "someothermod"))
         }
     }
 }
@@ -103,9 +114,11 @@ sourceSets {
     named("main") {
         resources.setSrcDirs(
             listOf(
-                sharedResourcesDir,
                 versionResourcesDir.asFile,
-                generatedResourcesDir.asFile
+
+                generatedResourcesDir.asFile,
+
+                sharedResources
             )
         )
     }
@@ -113,8 +126,13 @@ sourceSets {
 
 tasks {
 
+    named<Jar>("sourcesJar") {
+        dependsOn(syncSharedResources)
+    }
+
     withType<ProcessResources>().configureEach {
         dependsOn(syncSharedResources)
+
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 
@@ -124,14 +142,22 @@ tasks {
         inputs.property("version", project.property("mod.version"))
         inputs.property("minecraft", project.property("mod.mc_dep"))
 
+        fun prop(name: String) = project.property(name)
+            .toString()
+            .trim()
+            .replace("\r", "")
+            .replace("\n", "")
+
         val props = mapOf(
-            "id" to project.property("mod.id"),
-            "name" to project.property("mod.name"),
-            "version" to project.property("mod.version"),
-            "minecraft" to project.property("mod.mc_dep")
+            "id" to prop("mod.id"),
+            "name" to prop("mod.name"),
+            "version" to prop("mod.version"),
+            "minecraft" to prop("mod.mc_dep")
         )
 
-        filesMatching("META-INF/neoforge.mods.toml") { expand(props) }
+        filesMatching("META-INF/neoforge.mods.toml") {
+            expand(props)
+        }
 
         val mixinJava = "JAVA_${requiredJava.majorVersion}"
         filesMatching("*.mixins.json") { expand("java" to mixinJava) }
@@ -146,13 +172,17 @@ tasks {
         dependsOn("stonecutterGenerate")
         dependsOn(syncSharedResources)
     }
+
     named("runServer") {
         dependsOn("stonecutterGenerate")
         dependsOn(syncSharedResources)
     }
+
     named("runData") {
         dependsOn("stonecutterGenerate")
         dependsOn(syncSharedResources)
+
+        dependsOn(cleanGeneratedResources)
     }
 
     register("runDatagen") {
