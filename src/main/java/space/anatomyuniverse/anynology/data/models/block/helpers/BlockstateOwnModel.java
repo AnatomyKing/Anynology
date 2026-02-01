@@ -136,8 +136,8 @@ public final class BlockstateOwnModel {
             gen.simpleBlock(def.block, existing);
             gen.simpleBlockItem(def.block, existing);
         }
-    }*/
-    //?} else {
+    }
+    *///?} else {
     public static void generatePlaceholders(BlockModelGenerators blocks, Definition[] defs) {
         if (defs == null || defs.length == 0) return;
 
